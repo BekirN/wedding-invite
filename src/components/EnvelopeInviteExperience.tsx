@@ -91,11 +91,10 @@ export function EnvelopeInviteExperience({ couple, event, music, gallery, heroIm
 
   const embedSrc = useMemo(() => getEmbedSrc(event.reception), [event.reception])
 
-  const photos = useMemo(() => {
-    const picked = (gallery.length > 0 ? gallery : [heroImage]).slice(0, 6)
-    while (picked.length < 6) picked.push(picked[picked.length % Math.max(1, picked.length)])
-    return picked
-  }, [gallery, heroImage])
+  const photos = useMemo(
+    () => (gallery.length > 0 ? gallery : [heroImage]),
+    [gallery, heroImage],
+  )
 
   const openEnvelope = () => {
     if (opening || opened) return
@@ -271,11 +270,11 @@ export function EnvelopeInviteExperience({ couple, event, music, gallery, heroIm
                   <p className="mt-5 text-center text-[10px] uppercase tracking-[0.4em] text-[var(--muted)]">{couple.hashtag}</p>
                 </div>
 
-                <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-4">
-                  {photos.slice(0, 4).map((photo, index) => (
+                <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-5">
+                  {photos.map((photo, index) => (
                     <div key={`${photo}-${index}`} className="relative aspect-[4/5] overflow-hidden rounded-[12px] border border-[var(--gold-border)] bg-white p-1">
                       <div className="relative h-full w-full overflow-hidden rounded-[9px]">
-                        <Image src={photo} alt={`Galerija ${index + 1}`} fill className="object-cover" sizes="(max-width: 768px) 44vw, 180px" />
+                        <Image src={photo} alt={`Galerija ${index + 1}`} fill className="object-cover" sizes="(max-width: 640px) 44vw, (max-width: 1024px) 30vw, 200px" />
                       </div>
                     </div>
                   ))}
