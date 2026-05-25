@@ -7,9 +7,16 @@ const globalForPrisma = globalThis as unknown as { prisma?: PrismaClient }
 function getPrismaClient() {
   if (globalForPrisma.prisma) return globalForPrisma.prisma
 
-  const connectionString = process.env.DATABASE_URL
+  const connectionString =
+    process.env.DATABASE_URL ??
+    process.env.POSTGRES_PRISMA_URL ??
+    process.env.POSTGRES_URL ??
+    process.env.wedding_PRISMA_DATABASE_URL ??
+    process.env.wedding_DATABASE_URL ??
+    process.env.wedding_POSTGRES_URL
+
   if (!connectionString) {
-    throw new Error("DATABASE_URL is not configured")
+    throw new Error("Database connection string is not configured")
   }
 
   const client = new PrismaClient({ adapter: new PrismaPg(connectionString) })
