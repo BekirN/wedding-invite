@@ -334,7 +334,7 @@ export function EnvelopeInviteExperience({ couple, event, music, gallery, heroIm
                   >
                     <div className="relative aspect-[4/5] overflow-hidden rounded-[10px] border border-[var(--gold-border)] bg-white p-[5px]" style={{ boxShadow: "var(--shadow-card)" }}>
                       <div className="relative h-full w-full overflow-hidden rounded-[7px]">
-                        <Image src={photos[5 % photos.length]} alt="Uspomena" fill className="object-cover" sizes="120px" />
+                        <Image src={photos[6 % photos.length]} alt="Uspomena" fill className="object-cover" sizes="120px" />
                       </div>
                     </div>
                   </motion.div>
@@ -347,7 +347,7 @@ export function EnvelopeInviteExperience({ couple, event, music, gallery, heroIm
                   >
                     <div className="relative aspect-[4/5] overflow-hidden rounded-[10px] border border-[var(--gold-border)] bg-white p-[5px]" style={{ boxShadow: "var(--shadow-card)" }}>
                       <div className="relative h-full w-full overflow-hidden rounded-[7px]">
-                        <Image src={photos[6 % photos.length]} alt="Uspomena" fill className="object-cover" sizes="100px" />
+                        <Image src={photos[5 % photos.length]} alt="Uspomena" fill className="object-cover" sizes="100px" />
                       </div>
                     </div>
                   </motion.div>
