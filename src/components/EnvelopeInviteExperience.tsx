@@ -107,7 +107,7 @@ export function EnvelopeInviteExperience({ couple, event, music, gallery, heroIm
     }, 900)
   }
 
-  const submitRsvp = async (eventForm: SubmitEvent) => {
+  const submitRsvp = async (eventForm: { preventDefault(): void }) => {
     eventForm.preventDefault()
     if (!name.trim() || attending === null) return
 
