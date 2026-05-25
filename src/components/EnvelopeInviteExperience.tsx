@@ -288,22 +288,22 @@ export function EnvelopeInviteExperience({ couple, event, music, gallery, heroIm
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(255,253,248,0.80)_0%,_rgba(248,240,228,0.72)_52%,_rgba(240,227,209,0.65)_100%)]" />
 
               {/* Desktop floating polaroids */}
-              <div className="absolute left-3 top-16 hidden w-[160px] rotate-[-8deg] md:block lg:w-[190px]">
+              <div className="absolute left-3 top-16 z-20 hidden w-[160px] rotate-[-8deg] md:block lg:w-[190px]">
                 <div className="relative aspect-[4/5] overflow-hidden rounded-[16px] border border-[var(--gold-border)] bg-white/90 p-1.5" style={{ boxShadow: "var(--shadow-card)" }}>
                   <div className="relative h-full w-full overflow-hidden rounded-[12px]"><Image src={photos[0]} alt="Uspomena 1" fill className="object-cover" sizes="190px" /></div>
                 </div>
               </div>
-              <div className="absolute right-4 top-20 hidden w-[180px] rotate-[7deg] md:block lg:w-[210px]">
+              <div className="absolute right-4 top-20 z-20 hidden w-[180px] rotate-[7deg] md:block lg:w-[210px]">
                 <div className="relative aspect-[4/5] overflow-hidden rounded-[16px] border border-[var(--gold-border)] bg-white/90 p-1.5" style={{ boxShadow: "var(--shadow-card)" }}>
                   <div className="relative h-full w-full overflow-hidden rounded-[12px]"><Image src={photos[1]} alt="Uspomena 2" fill className="object-cover" sizes="210px" /></div>
                 </div>
               </div>
-              <div className="absolute bottom-12 left-10 hidden w-[170px] rotate-[6deg] md:block lg:w-[200px]">
+              <div className="absolute bottom-12 left-10 z-20 hidden w-[170px] rotate-[6deg] md:block lg:w-[200px]">
                 <div className="relative aspect-[4/5] overflow-hidden rounded-[16px] border border-[var(--gold-border)] bg-white/90 p-1.5" style={{ boxShadow: "var(--shadow-card)" }}>
                   <div className="relative h-full w-full overflow-hidden rounded-[12px]"><Image src={photos[2]} alt="Uspomena 3" fill className="object-cover" sizes="200px" /></div>
                 </div>
               </div>
-              <div className="absolute bottom-8 right-14 hidden w-[160px] rotate-[-7deg] md:block lg:w-[190px]">
+              <div className="absolute bottom-8 right-14 z-20 hidden w-[160px] rotate-[-7deg] md:block lg:w-[190px]">
                 <div className="relative aspect-[4/5] overflow-hidden rounded-[16px] border border-[var(--gold-border)] bg-white/90 p-1.5" style={{ boxShadow: "var(--shadow-card)" }}>
                   <div className="relative h-full w-full overflow-hidden rounded-[12px]"><Image src={photos[3]} alt="Uspomena 4" fill className="object-cover" sizes="190px" /></div>
                 </div>
