@@ -3,7 +3,7 @@
     person1: { name: "Numan", lastName: "Nokic" },
     person2: { name: "Mirela", lastName: "Mujahodzic" },
     story:
-      "Od prvog susreta 2019. znali smo da gradimo nesto posebno. Zelimo da nas najvazniji dan podijelimo sa vama.",
+      "Od prvog susreta 2018. znali smo da gradimo nešto posebno. Želimo da nas najvažniji dan podijelimo sa vama.",
     hashtag: "#NumaniMirela2026",
   },
   event: {
