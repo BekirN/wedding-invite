@@ -4,8 +4,6 @@ import { AnimatePresence, motion } from "framer-motion"
 import { FormEvent, useEffect, useMemo, useState } from "react"
 import { MusicPlayer } from "@/components/MusicPlayer"
 
-type InviteTab = "gallery" | "details" | "rsvp"
-
 interface Props {
   couple: {
     person1: { name: string; lastName: string }
@@ -56,7 +54,6 @@ function getEmbedSrc(reception: Props["event"]["reception"]) {
 export function EnvelopeInviteExperience({ couple, event, music, gallery, heroImage }: Props) {
   const [opened, setOpened] = useState(false)
   const [opening, setOpening] = useState(false)
-  const [tab, setTab] = useState<InviteTab>("gallery")
 
   const [attending, setAttending] = useState<"yes" | "no" | null>(null)
   const [name, setName] = useState("")
@@ -102,11 +99,12 @@ export function EnvelopeInviteExperience({ couple, event, music, gallery, heroIm
 
   const openEnvelope = () => {
     if (opening || opened) return
+
     setOpening(true)
     setTimeout(() => {
       setOpened(true)
       setOpening(false)
-    }, 950)
+    }, 900)
   }
 
   const submitRsvp = async (eventForm: FormEvent) => {
@@ -126,258 +124,271 @@ export function EnvelopeInviteExperience({ couple, event, music, gallery, heroIm
           message,
         }),
       })
+
       setStatus(res.ok ? "done" : "error")
     } catch {
       setStatus("error")
     }
   }
 
-  const tabButton = (value: InviteTab, label: string) => (
-    <button
-      type="button"
-      onClick={() => setTab(value)}
-      className={`rounded-full border px-4 py-2 text-[11px] uppercase tracking-[0.24em] transition ${
-        tab === value
-          ? "border-[var(--gold)] bg-[var(--gold)] text-white"
-          : "border-[var(--gold-border-strong)] bg-white/70 text-[var(--mid)]"
-      }`}
-    >
-      {label}
-    </button>
-  )
-
   return (
-    <div className="min-h-screen overflow-hidden bg-[var(--cream)]">
+    <div className="min-h-screen bg-[var(--cream)]">
       <AnimatePresence mode="wait">
         {!opened ? (
           <motion.section
-            key="envelope"
+            key="closed-envelope"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="relative flex min-h-screen items-center justify-center px-4"
+            className="relative flex min-h-screen items-center justify-center overflow-hidden px-4"
           >
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_#fffdf9_0%,_#f7efe4_45%,_#efe1d2_100%)]" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_0%,_#fffdf8_0%,_#f7eee2_45%,_#eddfcc_100%)]" />
 
             <div className="relative z-10 w-full max-w-[560px] text-center">
-              <p className="text-[10px] uppercase tracking-[0.55em] text-[var(--gold)]">Pozivnica</p>
-              <h1 className="mt-3 font-serif text-[clamp(34px,9vw,58px)] text-[var(--dark)]">
-                {couple.person1.name} & {couple.person2.name}
+              <p className="text-[10px] uppercase tracking-[0.52em] text-[var(--gold)]">Pozivnica</p>
+              <h1 className="mt-3 font-serif text-[clamp(34px,9vw,62px)] leading-none text-[var(--dark)]">
+                {couple.person1.name} <span className="text-[var(--gold)]">&</span> {couple.person2.name}
               </h1>
 
               <button type="button" onClick={openEnvelope} className="mt-8 w-full cursor-pointer border-none bg-transparent p-0">
-                <div className="relative mx-auto h-[320px] w-full max-w-[520px]" style={{ perspective: "1300px" }}>
+                <div className="relative mx-auto h-[320px] w-full max-w-[520px]" style={{ perspective: "1400px" }}>
                   <motion.div
-                    initial={false}
-                    animate={opening ? { y: -42, opacity: 0 } : { y: 0, opacity: 1 }}
+                    animate={opening ? { y: -52, opacity: 1 } : { y: 0, opacity: 1 }}
                     transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-                    className="absolute inset-x-8 top-[118px] rounded-[14px] border border-[var(--gold-border)] bg-white/90 px-4 py-3 text-[13px] text-[var(--mid)]"
+                    className="absolute left-[70px] right-[70px] top-[116px] rounded-[12px] border border-[var(--gold-border)] bg-white/95 px-4 py-3 text-[13px] text-[var(--mid)]"
                     style={{ boxShadow: "var(--shadow-card)" }}
                   >
                     Klikni da otvoris kovertu
                   </motion.div>
 
                   <motion.div
-                    initial={false}
-                    animate={opening ? { rotateX: -170 } : { rotateX: 0 }}
+                    animate={opening ? { rotateX: -165 } : { rotateX: 0 }}
                     transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
-                    className="absolute left-[42px] right-[42px] top-[52px] h-[150px] origin-top"
+                    className="absolute left-[44px] right-[44px] top-[52px] h-[150px] origin-top"
                     style={{
                       clipPath: "polygon(50% 0%, 100% 100%, 0% 100%)",
-                      background: "linear-gradient(180deg, #d9be98 0%, #bf9a6f 100%)",
-                      boxShadow: "0 12px 28px rgba(28,24,20,0.16)",
+                      background: "linear-gradient(180deg, #d9b88e 0%, #bf9a6f 100%)",
+                      boxShadow: "0 10px 24px rgba(28,24,20,0.16)",
+                      backfaceVisibility: "hidden",
                       transformStyle: "preserve-3d",
                     }}
                   />
 
-                  <div className="absolute inset-x-6 bottom-6 top-[120px] rounded-[18px] border border-[var(--gold-border)] bg-[linear-gradient(180deg,#f5e8d7_0%,#e9d4ba_100%)]" style={{ boxShadow: "var(--shadow-card)" }} />
+                  <div className="absolute inset-x-6 bottom-8 top-[120px] rounded-[18px] border border-[var(--gold-border)] bg-[linear-gradient(180deg,#f5e8d7_0%,#e9d4ba_100%)]" style={{ boxShadow: "var(--shadow-card)" }} />
                 </div>
               </button>
             </div>
           </motion.section>
         ) : (
-          <motion.section
-            key="invite"
-            initial={{ opacity: 0, y: 26 }}
+          <motion.main
+            key="opened-invite"
+            initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
-            className="flex min-h-screen items-center justify-center p-4 md:p-6"
+            className="relative"
           >
-            <div className="w-full max-w-6xl rounded-[34px] border border-[var(--gold-border)] bg-white/85 p-4 backdrop-blur-sm md:p-6" style={{ boxShadow: "var(--shadow-card)" }}>
-              <div className="grid gap-5 lg:grid-cols-[1fr_360px]">
-                <div>
-                  <p className="text-[10px] uppercase tracking-[0.55em] text-[var(--gold)]">Vjencanje</p>
-                  <h2 className="mt-2 font-serif text-[clamp(34px,7vw,64px)] leading-none text-[var(--dark)]">
+            <section className="relative flex min-h-screen items-center overflow-hidden px-4 py-10 md:px-8">
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_#fffdf8_0%,_#f8f0e4_52%,_#f0e3d1_100%)]" />
+
+              <div className="absolute left-3 top-16 hidden w-[160px] rotate-[-8deg] md:block lg:w-[190px]">
+                <div className="relative aspect-[4/5] overflow-hidden rounded-[16px] border border-[var(--gold-border)] bg-white/90 p-1.5" style={{ boxShadow: "var(--shadow-card)" }}>
+                  <div className="relative h-full w-full overflow-hidden rounded-[12px]"><Image src={photos[0]} alt="Uspomena 1" fill className="object-cover" sizes="190px" /></div>
+                </div>
+              </div>
+              <div className="absolute right-4 top-20 hidden w-[180px] rotate-[7deg] md:block lg:w-[210px]">
+                <div className="relative aspect-[4/5] overflow-hidden rounded-[16px] border border-[var(--gold-border)] bg-white/90 p-1.5" style={{ boxShadow: "var(--shadow-card)" }}>
+                  <div className="relative h-full w-full overflow-hidden rounded-[12px]"><Image src={photos[1]} alt="Uspomena 2" fill className="object-cover" sizes="210px" /></div>
+                </div>
+              </div>
+              <div className="absolute left-10 bottom-12 hidden w-[170px] rotate-[6deg] md:block lg:w-[200px]">
+                <div className="relative aspect-[4/5] overflow-hidden rounded-[16px] border border-[var(--gold-border)] bg-white/90 p-1.5" style={{ boxShadow: "var(--shadow-card)" }}>
+                  <div className="relative h-full w-full overflow-hidden rounded-[12px]"><Image src={photos[2]} alt="Uspomena 3" fill className="object-cover" sizes="200px" /></div>
+                </div>
+              </div>
+              <div className="absolute right-14 bottom-8 hidden w-[160px] rotate-[-7deg] md:block lg:w-[190px]">
+                <div className="relative aspect-[4/5] overflow-hidden rounded-[16px] border border-[var(--gold-border)] bg-white/90 p-1.5" style={{ boxShadow: "var(--shadow-card)" }}>
+                  <div className="relative h-full w-full overflow-hidden rounded-[12px]"><Image src={photos[3]} alt="Uspomena 4" fill className="object-cover" sizes="190px" /></div>
+                </div>
+              </div>
+
+              <div className="relative z-10 mx-auto w-full max-w-4xl">
+                <div className="rounded-[30px] border border-[var(--gold-border)] bg-[linear-gradient(180deg,#fffdfa_0%,#fff8ef_100%)] p-5 md:p-8" style={{ boxShadow: "var(--shadow-card)" }}>
+                  <p className="text-center text-[10px] uppercase tracking-[0.5em] text-[var(--gold)]">Vjencanje</p>
+                  <h2 className="mt-3 text-center font-serif text-[clamp(36px,8vw,68px)] leading-none text-[var(--dark)]">
                     {couple.person1.name} <span className="text-[var(--gold)]">&</span> {couple.person2.name}
                   </h2>
-                  <p className="mt-4 max-w-[700px] text-[14px] leading-7 text-[var(--mid)]">{couple.story}</p>
-                  <p className="mt-2 text-[10px] uppercase tracking-[0.36em] text-[var(--muted)]">{couple.hashtag}</p>
 
-                  <div className="mt-5 grid grid-cols-3 gap-2 sm:gap-3">
-                    {photos.slice(0, 6).map((photo, index) => (
-                      <div key={`${photo}-${index}`} className="relative aspect-[4/5] overflow-hidden rounded-[14px] border border-[var(--gold-border)] bg-[var(--cream)]">
-                        <Image src={photo} alt={`Uspomena ${index + 1}`} fill className="object-cover" sizes="(max-width: 768px) 31vw, 180px" />
-                      </div>
-                    ))}
-                  </div>
-                </div>
+                  <p className="mx-auto mt-4 max-w-[720px] text-center text-[14px] leading-7 text-[var(--mid)]">{couple.story}</p>
 
-                <div className="mx-auto w-full max-w-[360px] lg:max-w-none">
-                  <MusicPlayer music={music} />
-
-                  <div className="mt-4 grid grid-cols-3 gap-2">
+                  <div className="mt-5 grid grid-cols-3 gap-2 md:gap-3">
                     <div className="rounded-[12px] border border-[var(--gold-border)] bg-[var(--cream)] px-2 py-3 text-center">
-                      <p className="font-serif text-[26px] leading-none text-[var(--dark)]">{String(countdown.d).padStart(2, "0")}</p>
-                      <p className="mt-1 text-[9px] uppercase tracking-[0.24em] text-[var(--muted)]">Dana</p>
+                      <p className="font-serif text-[28px] leading-none text-[var(--dark)]">{String(countdown.d).padStart(2, "0")}</p>
+                      <p className="mt-1 text-[9px] uppercase tracking-[0.26em] text-[var(--muted)]">Dana</p>
                     </div>
                     <div className="rounded-[12px] border border-[var(--gold-border)] bg-[var(--cream)] px-2 py-3 text-center">
-                      <p className="font-serif text-[26px] leading-none text-[var(--dark)]">{String(countdown.h).padStart(2, "0")}</p>
-                      <p className="mt-1 text-[9px] uppercase tracking-[0.24em] text-[var(--muted)]">Sati</p>
+                      <p className="font-serif text-[28px] leading-none text-[var(--dark)]">{String(countdown.h).padStart(2, "0")}</p>
+                      <p className="mt-1 text-[9px] uppercase tracking-[0.26em] text-[var(--muted)]">Sati</p>
                     </div>
                     <div className="rounded-[12px] border border-[var(--gold-border)] bg-[var(--cream)] px-2 py-3 text-center">
-                      <p className="font-serif text-[26px] leading-none text-[var(--dark)]">{String(countdown.m).padStart(2, "0")}</p>
-                      <p className="mt-1 text-[9px] uppercase tracking-[0.24em] text-[var(--muted)]">Min</p>
+                      <p className="font-serif text-[28px] leading-none text-[var(--dark)]">{String(countdown.m).padStart(2, "0")}</p>
+                      <p className="mt-1 text-[9px] uppercase tracking-[0.26em] text-[var(--muted)]">Min</p>
                     </div>
                   </div>
-                </div>
-              </div>
 
-              <div className="mt-6 flex flex-wrap gap-2">
-                {tabButton("gallery", "Galerija")}
-                {tabButton("details", "Detalji")}
-                {tabButton("rsvp", "RSVP")}
-              </div>
-
-              <div className="mt-4 max-h-[42vh] overflow-y-auto rounded-[20px] border border-[var(--gold-border)] bg-white p-4 md:p-5">
-                {tab === "gallery" ? (
-                  <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
-                    {photos.map((photo, index) => (
-                      <div key={`${photo}-tab-${index}`} className="relative aspect-[4/5] overflow-hidden rounded-[12px] border border-[var(--gold-border)]">
-                        <Image src={photo} alt={`Fotografija ${index + 1}`} fill className="object-cover" sizes="(max-width: 768px) 44vw, 240px" />
-                      </div>
-                    ))}
-                  </div>
-                ) : null}
-
-                {tab === "details" ? (
-                  <div className="grid gap-4 lg:grid-cols-2">
-                    <div className="rounded-[14px] border border-[var(--gold-border)] bg-[var(--cream)] p-4">
-                      <p className="text-[10px] uppercase tracking-[0.34em] text-[var(--gold)]">Datum i vrijeme</p>
-                      <p className="mt-2 font-serif text-[30px] leading-none text-[var(--dark)]">{event.reception.time}</p>
+                  <div className="mt-5 grid gap-4 lg:grid-cols-[1fr_340px]">
+                    <div className="rounded-[14px] border border-[var(--gold-border)] bg-white/80 p-4">
+                      <p className="text-[10px] uppercase tracking-[0.32em] text-[var(--gold)]">Datum i lokacija</p>
                       <p className="mt-2 text-[13px] capitalize text-[var(--mid)]">{prettyDate}</p>
-
-                      <p className="mt-4 text-[10px] uppercase tracking-[0.34em] text-[var(--gold)]">Lokacija</p>
-                      <p className="mt-2 font-serif text-[26px] leading-tight text-[var(--dark)]">{event.reception.venue}</p>
+                      <p className="mt-1 font-serif text-[30px] text-[var(--dark)]">{event.reception.time}</p>
+                      <p className="mt-3 font-serif text-[26px] leading-tight text-[var(--dark)]">{event.reception.venue}</p>
                       <p className="mt-2 text-[13px] leading-7 text-[var(--mid)]">{event.reception.address}</p>
-
                       <a
                         href={event.reception.mapsUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="mt-4 inline-block rounded-full border border-[var(--gold)] px-4 py-2 text-[11px] uppercase tracking-[0.24em] text-[var(--gold)]"
+                        className="mt-4 inline-block rounded-full border border-[var(--gold)] px-4 py-2 text-[11px] uppercase tracking-[0.22em] text-[var(--gold)]"
                       >
                         Otvori mapu
                       </a>
                     </div>
 
-                    <div className="overflow-hidden rounded-[14px] border border-[var(--gold-border)]">
-                      <iframe
-                        src={embedSrc}
-                        width="100%"
-                        height="100%"
-                        style={{ border: 0, minHeight: 260 }}
-                        loading="lazy"
-                        referrerPolicy="no-referrer-when-downgrade"
-                        title="Lokacija proslave"
+                    <div className="mx-auto w-full max-w-[360px]"><MusicPlayer music={music} /></div>
+                  </div>
+
+                  <p className="mt-5 text-center text-[10px] uppercase tracking-[0.4em] text-[var(--muted)]">{couple.hashtag}</p>
+                </div>
+
+                <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-4">
+                  {photos.slice(0, 4).map((photo, index) => (
+                    <div key={`${photo}-${index}`} className="relative aspect-[4/5] overflow-hidden rounded-[12px] border border-[var(--gold-border)] bg-white p-1">
+                      <div className="relative h-full w-full overflow-hidden rounded-[9px]">
+                        <Image src={photo} alt={`Galerija ${index + 1}`} fill className="object-cover" sizes="(max-width: 768px) 44vw, 180px" />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </section>
+
+            <section className="px-4 pb-6 md:px-8 md:pb-10">
+              <div className="mx-auto w-full max-w-5xl rounded-[26px] border border-[var(--gold-border)] bg-white/90 p-4 md:p-6" style={{ boxShadow: "var(--shadow-card)" }}>
+                <p className="text-[10px] uppercase tracking-[0.4em] text-[var(--gold)]">Lokacija</p>
+                <h3 className="mt-2 font-serif text-[clamp(30px,6vw,48px)] leading-none text-[var(--dark)]">Gdje slavimo</h3>
+
+                <div className="mt-4 grid gap-4 lg:grid-cols-2">
+                  <div className="rounded-[14px] border border-[var(--gold-border)] bg-[var(--cream)] p-4">
+                    <p className="font-serif text-[26px] leading-tight text-[var(--dark)]">{event.reception.venue}</p>
+                    <p className="mt-2 text-[13px] leading-7 text-[var(--mid)]">{event.reception.address}</p>
+                    <p className="mt-3 text-[11px] uppercase tracking-[0.26em] text-[var(--gold)]">{event.reception.time}</p>
+                  </div>
+
+                  <div className="overflow-hidden rounded-[14px] border border-[var(--gold-border)]">
+                    <iframe
+                      src={embedSrc}
+                      width="100%"
+                      height="100%"
+                      style={{ border: 0, minHeight: 260 }}
+                      loading="lazy"
+                      referrerPolicy="no-referrer-when-downgrade"
+                      title="Lokacija proslave"
+                    />
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section className="px-4 pb-8 md:px-8 md:pb-12">
+              <div className="mx-auto w-full max-w-5xl rounded-[26px] border border-[var(--gold-border)] bg-white/90 p-4 md:p-6" style={{ boxShadow: "var(--shadow-card)" }}>
+                <p className="text-[10px] uppercase tracking-[0.4em] text-[var(--gold)]">RSVP</p>
+                <h3 className="mt-2 font-serif text-[clamp(30px,6vw,48px)] leading-none text-[var(--dark)]">Potvrda dolaska</h3>
+                <p className="mt-3 text-[13px] text-[var(--mid)]">Molimo odgovorite do {rsvpDeadline}</p>
+
+                {status === "done" ? (
+                  <div className="mt-5 rounded-[14px] border border-[var(--gold-border-strong)] bg-[var(--cream)] p-6 text-center">
+                    <p className="font-serif text-[34px] text-[var(--gold)]">*</p>
+                    <p className="mt-2 font-serif text-[30px] text-[var(--dark)]">Hvala, {name}!</p>
+                    <p className="mt-3 text-[14px] text-[var(--mid)]">Vas odgovor je uspjesno sacuvan.</p>
+                  </div>
+                ) : (
+                  <form onSubmit={submitRsvp} className="mt-5 grid gap-4 md:grid-cols-2">
+                    <div className="md:col-span-2">
+                      <label className="mb-2 block text-[10px] uppercase tracking-[0.3em] text-[var(--muted)]">Ime i prezime</label>
+                      <input
+                        value={name}
+                        onChange={(event) => setName(event.target.value)}
+                        className="w-full rounded-[12px] border border-[var(--gold-border-strong)] bg-white px-4 py-3 text-[14px] text-[var(--dark)] outline-none"
+                        placeholder="Unesite ime i prezime"
                       />
                     </div>
-                  </div>
-                ) : null}
 
-                {tab === "rsvp" ? (
-                  status === "done" ? (
-                    <div className="rounded-[14px] border border-[var(--gold-border-strong)] bg-[var(--cream)] p-6 text-center">
-                      <p className="font-serif text-[34px] text-[var(--gold)]">*</p>
-                      <p className="mt-2 font-serif text-[30px] text-[var(--dark)]">Hvala, {name}!</p>
-                      <p className="mt-3 text-[14px] text-[var(--mid)]">Vas odgovor je uspjesno sacuvan.</p>
-                    </div>
-                  ) : (
-                    <form onSubmit={submitRsvp} className="grid gap-4 md:grid-cols-2">
-                      <div className="md:col-span-2">
-                        <label className="mb-2 block text-[10px] uppercase tracking-[0.3em] text-[var(--muted)]">Ime i prezime</label>
-                        <input
-                          value={name}
-                          onChange={(event) => setName(event.target.value)}
-                          className="w-full rounded-[12px] border border-[var(--gold-border-strong)] bg-white px-4 py-3 text-[14px] text-[var(--dark)] outline-none"
-                          placeholder="Unesite ime i prezime"
-                        />
-                      </div>
-
-                      <div>
-                        <p className="mb-2 text-[10px] uppercase tracking-[0.3em] text-[var(--muted)]">Dolazak</p>
-                        <div className="grid grid-cols-2 gap-2">
-                          <button
-                            type="button"
-                            onClick={() => setAttending("yes")}
-                            className={`rounded-[10px] border px-3 py-2 text-[11px] uppercase tracking-[0.2em] ${
-                              attending === "yes" ? "border-[var(--gold)] bg-[var(--gold-fill)] text-[var(--gold)]" : "border-[var(--gold-border-strong)] text-[var(--mid)]"
-                            }`}
-                          >
-                            Dolazim
-                          </button>
-                          <button
-                            type="button"
-                            onClick={() => setAttending("no")}
-                            className={`rounded-[10px] border px-3 py-2 text-[11px] uppercase tracking-[0.2em] ${
-                              attending === "no" ? "border-[var(--gold)] bg-[var(--gold-fill)] text-[var(--gold)]" : "border-[var(--gold-border-strong)] text-[var(--mid)]"
-                            }`}
-                          >
-                            Ne mogu
-                          </button>
-                        </div>
-                      </div>
-
-                      <div>
-                        <label className="mb-2 block text-[10px] uppercase tracking-[0.3em] text-[var(--muted)]">Broj gostiju</label>
-                        <input
-                          type="number"
-                          min={1}
-                          max={6}
-                          value={guests}
-                          onChange={(event) => setGuests(Math.min(6, Math.max(1, Number(event.target.value) || 1)))}
-                          className="w-full rounded-[12px] border border-[var(--gold-border-strong)] bg-white px-4 py-3 text-[14px] text-[var(--dark)] outline-none"
-                        />
-                      </div>
-
-                      <div className="md:col-span-2">
-                        <label className="mb-2 block text-[10px] uppercase tracking-[0.3em] text-[var(--muted)]">Poruka (opciono)</label>
-                        <textarea
-                          rows={3}
-                          value={message}
-                          onChange={(event) => setMessage(event.target.value)}
-                          className="w-full resize-none rounded-[12px] border border-[var(--gold-border-strong)] bg-white px-4 py-3 text-[14px] text-[var(--dark)] outline-none"
-                          placeholder="Napisite poruku mladencima"
-                        />
-                      </div>
-
-                      <div className="md:col-span-2 flex flex-wrap items-center justify-between gap-3">
-                        <p className="text-[12px] text-[var(--mid)]">Molimo odgovorite do {rsvpDeadline}</p>
+                    <div>
+                      <p className="mb-2 text-[10px] uppercase tracking-[0.3em] text-[var(--muted)]">Dolazak</p>
+                      <div className="grid grid-cols-2 gap-2">
                         <button
-                          type="submit"
-                          disabled={status === "sending" || !name.trim() || attending === null}
-                          className="rounded-full border border-[var(--gold)] bg-[var(--gold)] px-5 py-2 text-[11px] uppercase tracking-[0.24em] text-white disabled:cursor-not-allowed disabled:opacity-50"
+                          type="button"
+                          onClick={() => setAttending("yes")}
+                          className={`rounded-[10px] border px-3 py-2 text-[11px] uppercase tracking-[0.2em] ${
+                            attending === "yes"
+                              ? "border-[var(--gold)] bg-[var(--gold-fill)] text-[var(--gold)]"
+                              : "border-[var(--gold-border-strong)] text-[var(--mid)]"
+                          }`}
                         >
-                          {status === "sending" ? "Saljemo..." : "Posalji"}
+                          Dolazim
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setAttending("no")}
+                          className={`rounded-[10px] border px-3 py-2 text-[11px] uppercase tracking-[0.2em] ${
+                            attending === "no"
+                              ? "border-[var(--gold)] bg-[var(--gold-fill)] text-[var(--gold)]"
+                              : "border-[var(--gold-border-strong)] text-[var(--mid)]"
+                          }`}
+                        >
+                          Ne mogu
                         </button>
                       </div>
+                    </div>
 
-                      {status === "error" ? <p className="md:col-span-2 text-[13px] text-[#b04030]">Greska pri slanju. Pokusajte ponovo.</p> : null}
-                    </form>
-                  )
-                ) : null}
+                    <div>
+                      <label className="mb-2 block text-[10px] uppercase tracking-[0.3em] text-[var(--muted)]">Broj gostiju</label>
+                      <input
+                        type="number"
+                        min={1}
+                        max={6}
+                        value={guests}
+                        onChange={(event) => setGuests(Math.min(6, Math.max(1, Number(event.target.value) || 1)))}
+                        className="w-full rounded-[12px] border border-[var(--gold-border-strong)] bg-white px-4 py-3 text-[14px] text-[var(--dark)] outline-none"
+                      />
+                    </div>
+
+                    <div className="md:col-span-2">
+                      <label className="mb-2 block text-[10px] uppercase tracking-[0.3em] text-[var(--muted)]">Poruka (opciono)</label>
+                      <textarea
+                        rows={3}
+                        value={message}
+                        onChange={(event) => setMessage(event.target.value)}
+                        className="w-full resize-none rounded-[12px] border border-[var(--gold-border-strong)] bg-white px-4 py-3 text-[14px] text-[var(--dark)] outline-none"
+                        placeholder="Napisite poruku mladencima"
+                      />
+                    </div>
+
+                    <div className="md:col-span-2 flex flex-wrap items-center justify-between gap-3">
+                      <p className="text-[12px] text-[var(--mid)]">Potvrdu saljete direktno mladencima.</p>
+                      <button
+                        type="submit"
+                        disabled={status === "sending" || !name.trim() || attending === null}
+                        className="rounded-full border border-[var(--gold)] bg-[var(--gold)] px-5 py-2 text-[11px] uppercase tracking-[0.24em] text-white disabled:cursor-not-allowed disabled:opacity-50"
+                      >
+                        {status === "sending" ? "Saljemo..." : "Posalji"}
+                      </button>
+                    </div>
+
+                    {status === "error" ? <p className="md:col-span-2 text-[13px] text-[#b04030]">Greska pri slanju. Pokusajte ponovo.</p> : null}
+                  </form>
+                )}
               </div>
-            </div>
-          </motion.section>
+            </section>
+          </motion.main>
         )}
       </AnimatePresence>
     </div>
