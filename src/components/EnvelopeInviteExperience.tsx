@@ -119,7 +119,7 @@ export function EnvelopeInviteExperience({ couple, event, music, gallery, heroIm
             fill
             className="object-cover object-center"
           />
-          <div className="absolute inset-0" style={{ background: "rgba(250,247,242,0.87)" }} />
+          <div className="absolute inset-0" style={{ background: "rgba(250,247,242,0.70)" }} />
         </div>
       )}
       <AnimatePresence mode="wait">
@@ -285,7 +285,7 @@ export function EnvelopeInviteExperience({ couple, event, music, gallery, heroIm
 
             {/* ── Hero / main invite section ── */}
             <section className="relative overflow-hidden px-4 py-6 md:flex md:min-h-screen md:items-center md:px-8 md:py-10">
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(255,253,248,0.92)_0%,_rgba(248,240,228,0.88)_52%,_rgba(240,227,209,0.84)_100%)]" />
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(255,253,248,0.80)_0%,_rgba(248,240,228,0.72)_52%,_rgba(240,227,209,0.65)_100%)]" />
 
               {/* Desktop floating polaroids */}
               <div className="absolute left-3 top-16 hidden w-[160px] rotate-[-8deg] md:block lg:w-[190px]">
@@ -433,7 +433,7 @@ export function EnvelopeInviteExperience({ couple, event, music, gallery, heroIm
             {/* ── Location section ── */}
             <section className="px-4 pb-6 md:px-8 md:pb-10">
               <div
-                className="mx-auto w-full max-w-5xl rounded-[26px] border border-[var(--gold-border)] bg-white/82 p-4 md:p-6"
+                className="mx-auto w-full max-w-5xl rounded-[26px] border border-[var(--gold-border)] bg-white/75 p-4 md:p-6"
                 style={{ boxShadow: "var(--shadow-card)" }}
               >
                 <p className="text-[10px] uppercase tracking-[0.4em] text-[var(--gold)]">Lokacija</p>
@@ -471,7 +471,7 @@ export function EnvelopeInviteExperience({ couple, event, music, gallery, heroIm
             {/* ── RSVP section ── */}
             <section className="px-4 pb-10 md:px-8 md:pb-14">
               <div
-                className="mx-auto w-full max-w-5xl rounded-[26px] border border-[var(--gold-border)] bg-white/82 p-4 md:p-6"
+                className="mx-auto w-full max-w-5xl rounded-[26px] border border-[var(--gold-border)] bg-white/75 p-4 md:p-6"
                 style={{ boxShadow: "var(--shadow-card)" }}
               >
                 <p className="text-[10px] uppercase tracking-[0.4em] text-[var(--gold)]">RSVP</p>
