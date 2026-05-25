@@ -29,6 +29,10 @@
     "/images/IMG_9904.jpeg",
     "/images/IMG_9903.jpeg",
     "/images/IMG_9901.png",
+    "/images/NumanMirela1.jpg",
+    "/images/NumanMirela2.jpg",
+    "/images/SrceNumanMirela.jpg",
+
   ],
   design: {
     heroImage: "/images/IMG_9908.jpeg",
