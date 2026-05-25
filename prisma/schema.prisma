@@ -1,0 +1,19 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Guest {
+  id         String    @id @default(cuid())
+  token      String    @unique
+  name       String
+  email      String?
+  attending  Boolean?
+  plusOnes   Int       @default(0)
+  message    String?
+  answeredAt DateTime?
+  createdAt  DateTime  @default(now())
+}

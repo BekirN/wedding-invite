@@ -1,26 +1,76 @@
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Montserrat:wght@200;300;400&display=swap");
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --cream: #faf7f2;
+  --white: #ffffff;
+  --dark: #1c1814;
+  --mid: #4a3d34;
+  --muted: #6b5c52;
+  --gold: #7a5535;
+  --gold-deco: #a07850;
+  --gold-light: #c4a882;
+  --gold-border: rgba(160, 120, 80, 0.18);
+  --gold-border-strong: rgba(160, 120, 80, 0.38);
+  --gold-fill: rgba(160, 120, 80, 0.06);
+  --shadow-soft: 0 4px 32px rgba(28, 24, 20, 0.07);
+  --shadow-card: 0 2px 16px rgba(28, 24, 20, 0.06), 0 8px 40px rgba(28, 24, 20, 0.04);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
+  scroll-snap-type: y mandatory;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: radial-gradient(circle at top, #fefcf8 0%, var(--cream) 55%, #f6efe5 100%);
+  color: var(--dark);
+  font-family: "Montserrat", sans-serif;
+  font-weight: 300;
+  overflow-x: hidden;
+}
+
+section {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+.font-serif {
+  font-family: "Cormorant Garamond", serif;
+}
+
+input[type="range"] {
+  height: 4px;
+  cursor: pointer;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+  height: 4px;
+  background: rgba(122, 85, 53, 0.22);
+  border-radius: 9999px;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  margin-top: -5px;
+  height: 14px;
+  width: 14px;
+  border-radius: 9999px;
+  background: var(--gold);
+  border: 1px solid rgba(255, 255, 255, 0.65);
+}
+
+input[type="range"]::-moz-range-track {
+  height: 4px;
+  background: rgba(122, 85, 53, 0.22);
+  border-radius: 9999px;
+}
+
+input[type="range"]::-moz-range-thumb {
+  height: 14px;
+  width: 14px;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  background: var(--gold);
 }
