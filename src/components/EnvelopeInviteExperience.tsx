@@ -1,7 +1,7 @@
 ﻿"use client"
 import Image from "next/image"
 import { AnimatePresence, motion } from "framer-motion"
-import { FormEvent, useEffect, useMemo, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { MusicPlayer } from "@/components/MusicPlayer"
 
 interface Props {
@@ -107,7 +107,7 @@ export function EnvelopeInviteExperience({ couple, event, music, gallery, heroIm
     }, 900)
   }
 
-  const submitRsvp = async (eventForm: FormEvent) => {
+  const submitRsvp = async (eventForm: SubmitEvent) => {
     eventForm.preventDefault()
     if (!name.trim() || attending === null) return
 
@@ -152,29 +152,42 @@ export function EnvelopeInviteExperience({ couple, event, music, gallery, heroIm
 
               <button type="button" onClick={openEnvelope} className="mt-8 w-full cursor-pointer border-none bg-transparent p-0">
                 <div className="relative mx-auto h-[320px] w-full max-w-[520px]" style={{ perspective: "1400px" }}>
+
+                  {/* Envelope body — FIRST in DOM so it renders behind everything */}
+                  <div
+                    className="absolute inset-x-6 bottom-8 top-[80px] rounded-[18px] border border-[var(--gold-border)]"
+                    style={{
+                      background: "linear-gradient(180deg, #f5e8d7 0%, #e9d4ba 100%)",
+                      boxShadow: "var(--shadow-card)",
+                    }}
+                  />
+
+                  {/* Card with couple names — SECOND in DOM, sits inside envelope */}
                   <motion.div
-                    animate={opening ? { y: -52, opacity: 1 } : { y: 0, opacity: 1 }}
+                    animate={opening ? { y: -64 } : { y: 0 }}
                     transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-                    className="absolute left-[70px] right-[70px] top-[116px] rounded-[12px] border border-[var(--gold-border)] bg-white/95 px-4 py-3 text-[13px] text-[var(--mid)]"
+                    className="absolute left-[60px] right-[60px] top-[118px] rounded-[12px] border border-[var(--gold-border)] bg-white/96 px-4 py-4 text-center"
                     style={{ boxShadow: "var(--shadow-card)" }}
                   >
-                    Klikni da otvoris kovertu
+                    <p className="font-serif text-[19px] leading-tight text-[var(--dark)]">
+                      {couple.person1.name} <span className="text-[var(--gold)]">&</span> {couple.person2.name}
+                    </p>
+                    <p className="mt-1.5 text-[10px] uppercase tracking-[0.38em] text-[var(--muted)]">Otvori pozivnicu</p>
                   </motion.div>
 
+                  {/* Flap — LAST in DOM so it renders on top and the animation is visible */}
                   <motion.div
-                    animate={opening ? { rotateX: -165 } : { rotateX: 0 }}
+                    animate={opening ? { rotateX: -170 } : { rotateX: 0 }}
                     transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
-                    className="absolute left-[44px] right-[44px] top-[52px] h-[150px] origin-top"
+                    className="absolute left-[44px] right-[44px] top-[52px] h-[155px] origin-top"
                     style={{
                       clipPath: "polygon(50% 0%, 100% 100%, 0% 100%)",
                       background: "linear-gradient(180deg, #d9b88e 0%, #bf9a6f 100%)",
-                      boxShadow: "0 10px 24px rgba(28,24,20,0.16)",
+                      boxShadow: "0 10px 24px rgba(28,24,20,0.14)",
                       backfaceVisibility: "hidden",
                       transformStyle: "preserve-3d",
                     }}
                   />
-
-                  <div className="absolute inset-x-6 bottom-8 top-[120px] rounded-[18px] border border-[var(--gold-border)] bg-[linear-gradient(180deg,#f5e8d7_0%,#e9d4ba_100%)]" style={{ boxShadow: "var(--shadow-card)" }} />
                 </div>
               </button>
             </div>
