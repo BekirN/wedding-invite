@@ -375,26 +375,16 @@ export function EnvelopeInviteExperience({ couple, event, music, gallery, heroIm
                     ))}
                   </div>
 
-                  {/* Date + Music */}
-                  <div className="mt-5 grid gap-4 lg:grid-cols-[1fr_340px]">
-                    <div className="rounded-[14px] border border-[var(--gold-border)] bg-white/80 p-4 md:p-5">
-                      <p className="text-[10px] uppercase tracking-[0.32em] text-[var(--gold)]">Datum i lokacija</p>
-                      <p className="mt-2 text-[13px] capitalize text-[var(--mid)]">{prettyDate}</p>
-                      <p className="mt-1 font-serif text-[clamp(22px,5vw,30px)] text-[var(--dark)]">{event.reception.time}</p>
-                      <p className="mt-3 font-serif text-[clamp(20px,4.5vw,26px)] leading-tight text-[var(--dark)]">{event.reception.venue}</p>
-                      <p className="mt-2 text-[13px] leading-6 text-[var(--mid)]">{event.reception.address}</p>
-                      <a
-                        href={event.reception.mapsUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="mt-4 inline-block rounded-full border border-[var(--gold)] px-4 py-2 text-[11px] uppercase tracking-[0.22em] text-[var(--gold)]"
-                      >
-                        Otvori mapu
-                      </a>
-                    </div>
-                    <div className="mx-auto w-full max-w-[360px]">
-                      <MusicPlayer music={music} />
-                    </div>
+                  {/* Date line */}
+                  <div className="mt-5 rounded-[14px] border border-[var(--gold-border)] bg-[var(--cream)] px-4 py-3 text-center">
+                    <p className="text-[10px] uppercase tracking-[0.32em] text-[var(--gold)]">Datum</p>
+                    <p className="mt-1 text-[13px] capitalize text-[var(--mid)]">{prettyDate}</p>
+                    <p className="font-serif text-[clamp(22px,5vw,30px)] leading-tight text-[var(--dark)]">{event.reception.time}</p>
+                  </div>
+
+                  {/* Music player */}
+                  <div className="mt-4 mx-auto w-full max-w-[420px]">
+                    <MusicPlayer music={music} />
                   </div>
 
                   <p className="mt-5 text-center text-[10px] uppercase tracking-[0.4em] text-[var(--muted)]">{couple.hashtag}</p>
