@@ -42,9 +42,8 @@ function getCountdown(dateString: string) {
 }
 
 function getEmbedSrc(reception: Props["event"]["reception"]) {
-  if (reception.mapsEmbed && reception.mapsEmbed.trim().length > 0) return reception.mapsEmbed
-  const q = encodeURIComponent(`${reception.venue}, ${reception.address}`)
-  return `https://www.google.com/maps?q=${q}&output=embed`
+  const embed = reception.mapsEmbed?.trim()
+  return embed && embed.length > 0 ? embed : null
 }
 
 const E = [0.22, 1, 0.36, 1] as const
@@ -80,6 +79,7 @@ export function EnvelopeInviteExperience({ couple, event, music, gallery, heroIm
   )
 
   const embedSrc = useMemo(() => getEmbedSrc(event.reception), [event.reception])
+
   const photos = useMemo(() => (gallery.length > 0 ? gallery : [heroImage]), [gallery, heroImage])
 
   const openEnvelope = () => {
@@ -443,17 +443,30 @@ export function EnvelopeInviteExperience({ couple, event, music, gallery, heroIm
                       Otvori mapu
                     </a>
                   </div>
-                  <div className="overflow-hidden rounded-[14px] border border-[var(--gold-border)]" style={{ minHeight: 240 }}>
-                    <iframe
-                      src={embedSrc}
-                      width="100%"
-                      height="100%"
-                      style={{ border: 0, minHeight: 240 }}
-                      loading="lazy"
-                      referrerPolicy="no-referrer-when-downgrade"
-                      title="Lokacija proslave"
-                    />
-                  </div>
+                  {embedSrc ? (
+                    <div className="overflow-hidden rounded-[14px] border border-[var(--gold-border)]" style={{ minHeight: 240 }}>
+                      <iframe
+                        src={embedSrc}
+                        width="100%"
+                        height="100%"
+                        style={{ border: 0, minHeight: 240 }}
+                        loading="lazy"
+                        referrerPolicy="no-referrer-when-downgrade"
+                        title="Lokacija proslave"
+                      />
+                    </div>
+                  ) : (
+                    <div className="flex items-center justify-center rounded-[14px] border border-[var(--gold-border)] bg-[var(--cream)]" style={{ minHeight: 240 }}>
+                      <a
+                        href={event.reception.mapsUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="rounded-full border border-[var(--gold)] px-6 py-3 text-[12px] uppercase tracking-[0.3em] text-[var(--gold)]"
+                      >
+                        Otvori u Google Maps
+                      </a>
+                    </div>
+                  )}
                 </div>
               </div>
             </section>
